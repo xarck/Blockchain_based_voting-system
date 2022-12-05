@@ -8,6 +8,7 @@ contract Election {
     bool status;
     uint8 numCandidates;
     uint8 numVoters;    
+    address chairman;
 
 
     struct Candidate {
@@ -15,7 +16,6 @@ contract Election {
         string candidate_description;
         string imgHash;
         uint8 voteCount;
-        Voter[] voters;
         string email;
     }
 
@@ -34,6 +34,24 @@ contract Election {
 
     mapping(string=>Voter) voters;
 
+    // Constructor
+
+    constructor(){
+        chairman = msg.sender;
+    }
+
+
+    // function add a candidate
+
+    function addCandidate(string memory name, string memory description,string memory imgHash,string memory email) public{
+        require(chairman == msg.sender,"Only Chairman can add a candidate");
+        candidates[numCandidates].candidate_name = name;
+        candidates[numCandidates].candidate_description = description;
+        candidates[numCandidates].imgHash = imgHash;
+        candidates[numCandidates].email = email;
+        candidates[numCandidates].voteCount = 0;
+        numCandidates++;
+    }
 
     //function to vote and check for double voting
 
@@ -44,7 +62,6 @@ contract Election {
         voters[e] = Voter(candidateID,true); 
         numVoters++;
         candidates[candidateID].voteCount++; 
-        candidates[candidateID].voters.push(Voter(candidateID,true));
     }
 
     //function to get count of candidates
