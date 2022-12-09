@@ -4,13 +4,13 @@ import Election from "../Election.json";
 import { ElectionAddress } from "../config.js";
 
 export default function Home() {
-    const [numberofVoters, setNumberofVoters] = useState();
-    const [numberofCandidates, setNumberofCandidate] = useState();
-    const [candidateDetails, setCandidateDetails] = useState();
-    const [winner, setWinner] = useState();
-    const [candidateID, setCandidateID] = useState();
-    const [voterName, setVoterName] = useState();
-    const [candidateVotingID, setCandidateVotingID] = useState();
+    const [numberofVoters, setNumberofVoters] = useState(0);
+    const [numberofCandidates, setNumberofCandidate] = useState(0);
+    const [candidateDetails, setCandidateDetails] = useState({});
+    const [winner, setWinner] = useState(0);
+    const [candidateID, setCandidateID] = useState(0);
+    const [voterName, setVoterName] = useState("");
+    const [candidateVotingID, setCandidateVotingID] = useState(0);
 
     useEffect(() => {
         getDetails();
@@ -35,7 +35,7 @@ export default function Home() {
                     Election.abi,
                     provider
                 );
-                var data = await contract.getNumOfVoters();
+                let data = await contract.getNumOfVoters();
                 setNumberofVoters(data);
 
                 data = await contract.getNumOfCandidates();
@@ -62,7 +62,7 @@ export default function Home() {
             provider
         );
 
-        var data = await contract.getCandidate(candidateID);
+        let data = await contract.getCandidate(candidateID);
         setCandidateDetails(data);
     }
 
@@ -75,7 +75,7 @@ export default function Home() {
             signer
         );
 
-        var data = await contract.vote(candidateVotingID, voterName);
+        let data = await contract.vote(candidateVotingID, voterName);
         console.log(data);
         setCandidateDetails(data);
     }
@@ -87,11 +87,11 @@ export default function Home() {
             </div>
             <div>
                 <div>No. of Voters</div>
-                <div>{numberofVoters && ""}</div>
+                <div>{numberofVoters}</div>
             </div>
             <div>
                 <div>No. of Candidate</div>
-                <div>{numberofCandidates && ""}</div>
+                <div>{numberofCandidates}</div>
             </div>
             <div>
                 <div>Fetch Candiate Details</div>
