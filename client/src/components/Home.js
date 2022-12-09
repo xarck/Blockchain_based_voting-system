@@ -9,6 +9,8 @@ export default function Home() {
     const [candidateDetails, setCandidateDetails] = useState();
     const [winner, setWinner] = useState();
     const [candidateID, setCandidateID] = useState();
+    const [voterName, setVoterName] = useState();
+    const [candidateVotingID, setCandidateVotingID] = useState();
 
     useEffect(() => {
         getDetails();
@@ -73,7 +75,7 @@ export default function Home() {
             signer
         );
 
-        var data = await contract.vote(1, "ashdfs");
+        var data = await contract.vote(candidateVotingID, voterName);
         console.log(data);
         setCandidateDetails(data);
     }
@@ -105,6 +107,15 @@ export default function Home() {
                 )}
             </div>
             <div>
+                <input
+                    name="voter"
+                    onChange={(e) => setVoterName(e.target.value)}
+                />
+                <input
+                    type="Number"
+                    name="candId"
+                    onChange={(e) => setCandidateVotingID(e.target.value)}
+                />
                 <button onClick={makeavote}>Vote</button>
             </div>
             <div>
