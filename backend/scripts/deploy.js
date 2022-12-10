@@ -23,9 +23,17 @@ async function main() {
     // const getNumOfCandidates = await electionStorage.getNumOfCandidates();
     // console.log(`Current Value is: ${getNumOfCandidates}`);
     const Election = await ethers.getContractFactory("Election");
+    // const Election = await ethers.getContract("Election");
 
     // Start deployment, returning a promise that resolves to a contract object
     const ELECION_CONTRACT = await Election.deploy();
+    // await ELECION_CONTRACT.deployed();
+    if (network.config.chainId === 5) {
+        await ELECION_CONTRACT.deployTransaction.wait(1);
+        // await verify(simpleStorage.address, []);
+      } else {
+        console.log("Deployed on Localhost")
+      }
     console.log("Contract deployed to address:", ELECION_CONTRACT.address);
 }
 
