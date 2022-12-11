@@ -75,6 +75,10 @@ contract Election {
         return numVoters;
     }
 
+    function getChairman() public view returns (address){
+        return chairman;
+    }
+
     function getCandidate(
         uint8 candidateID
     )
