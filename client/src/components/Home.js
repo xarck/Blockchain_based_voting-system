@@ -2,17 +2,21 @@ import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import Election from "../Election.json";
 import { ElectionAddress } from "../config.js";
+import { useData } from "../context/data";
 
 export default function Home() {
     const [numberofVoters, setNumberofVoters] = useState(0);
     const [numberofCandidates, setNumberofCandidate] = useState(0);
-    const [candidateDetails, setCandidateDetails] = useState({});
+    const [candidateDetails, setCandidateDetails] = useState();
     const [winner, setWinner] = useState(0);
     const [candidateID, setCandidateID] = useState(0);
     const [voterName, setVoterName] = useState("");
     const [candidateVotingID, setCandidateVotingID] = useState(0);
+    const [isConnected, setisConnected] = useState(false);
+    const { setAccount } = useData();
 
     useEffect(() => {
+        connectToMetaMask();
         getDetails();
     }, []);
 
@@ -21,7 +25,8 @@ export default function Home() {
             const account = await window.ethereum.request({
                 method: "eth_requestAccounts",
             });
-            console.log(account);
+            setAccount(account[0]);
+            setisConnected(true);
         }
     }
     async function getDetails() {
@@ -82,8 +87,9 @@ export default function Home() {
     return (
         <div>
             <div>
-                <h1>Block Chain Based Voting</h1>
-                <button onClick={connectToMetaMask}>Connect</button>
+                <button onClick={connectToMetaMask}>
+                    {isConnected ? "Connected" : "Connect"}
+                </button>
             </div>
             <div>
                 <div>No. of Voters</div>
