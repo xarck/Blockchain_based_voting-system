@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+
 import { Button, Label, Input } from "reactstrap";
+
 import { ethers } from "ethers";
 import Election from "../Election.json";
 import { ElectionAddress } from "../config.js";
+
 import ShowCandidateDetails from "./ShowCandidateDetails";
 
 export default function Count() {
@@ -86,7 +89,7 @@ export default function Count() {
             <br />
             <Button onClick={checkWinner}>Show Winner</Button>
             <br />
-            {winner ? ShowCandidateDetails(winner) : "Nothing is here"}
+            {winner ? ShowCandidateDetails(winner) : ""}
         </div>
     );
 }

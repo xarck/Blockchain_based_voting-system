@@ -9,7 +9,9 @@ export default function ShowCandidateDetails(winner) {
             <Label>Name</Label>
             <Input type="text" defaultValue={winner[0]} />
             <Label>Description</Label>
-            <Input type="textarea" value={winner[1]} />
+            <Input type="textarea" defaultValue={winner[1]} />
+            <Label>Votes</Label>
+            <Input type="number" defaultValue={winner[3]} />
         </div>
     );
 }

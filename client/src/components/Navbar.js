@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    Button,
-} from "reactstrap";
+import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Button } from "reactstrap";
 import { useData } from "../context/data";
 
 export default function NavBarComponent() {
@@ -26,29 +16,6 @@ export default function NavBarComponent() {
         }
     }
     return (
-        // <nav>
-        //     <div>
-        //         <h3>Vote</h3>
-        //     </div>
-        //     <div>
-        //         <ul>
-        //             <li>
-        //                 <Link to="/">Home</Link>
-        //             </li>
-        //             <li>
-        //                 <Link to="/candidate">Add A Candidate</Link>
-        //             </li>
-        //             <li>
-        //                 <Link to="/result">Results</Link>
-        //             </li>
-        //             <li>
-        //                 <Button onClick={connectToMetaMask}>
-        //                     {isConnected ? "Connected" : "Connect"}
-        //                 </Button>
-        //             </li>
-        //         </ul>
-        //     </div>
-        // </nav>
         <Navbar color="light" light expand="md">
             <NavbarBrand href="/">Vote</NavbarBrand>
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
+
 import Election from "../Election.json";
 import { ElectionAddress } from "../config";
 import { useData } from "../context/data";
