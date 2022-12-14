@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from "./components/Home";
 import AddCandidate from "./components/AddCandidate";
-import Navbar from "./components/Navbar";
+import NavbarComponent from "./components/Navbar";
 import Result from "./components/Result";
 
 import { DataProvider } from "./context/data";
@@ -15,7 +15,7 @@ function App() {
     return (
         <Router>
             <DataProvider>
-                <Navbar />
+                <NavbarComponent />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/candidate" element={<AddCandidate />} />
