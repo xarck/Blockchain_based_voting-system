@@ -1,12 +1,26 @@
 nav {
-    display: inline;
+    padding: 10px 10%;
+    text-align: center;
+}
+nav div {
+    display: inline-block;
+    margin-right: 100px;
+}
+nav a {
+    text-decoration: none;
 }
 nav ul {
-    /* display: inline; */
+    list-style-type: none;
 }
-/* nav ul li {
-    display: inline-block;
-    height: 30px;
-    width: 450px;
-    margin: 20;
-} */
+nav ul li {
+    display: inline;
+    margin: 0 70px;
+}
+
+#addCandidate {
+    padding: 10px 25%;
+}
+
+#results {
+    padding: 10px 25%;
+}
