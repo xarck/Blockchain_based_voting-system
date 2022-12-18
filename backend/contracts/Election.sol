@@ -3,6 +3,7 @@
 pragma solidity ^0.8.7;
 
 contract Election {
+
     // Election Variables
     bool status;
     uint8 numCandidates;
@@ -14,23 +15,21 @@ contract Election {
         string candidate_description;
         string imgHash;
         uint8 voteCount;
-        string email;
+        uint8 candidateID;
     }
-
-    //candidate mapping
-
-    mapping(uint8 => Candidate) public candidates;
-
-    //voter election_description
 
     struct Voter {
         uint8 candidate_id_voted;
         bool voted;
     }
 
+    //candidate mapping
+
+    mapping(uint8 => Candidate) public candidates;
+
     //voter mapping
 
-    mapping(string => Voter) voters;
+    mapping(address => Voter) voters;
 
     // Constructor
 
@@ -43,24 +42,19 @@ contract Election {
     function addCandidate(
         string memory name,
         string memory description,
-        string memory imgHash,
-        string memory email
+        string memory imgHash
     ) public {
         require(chairman == msg.sender, "Only Chairman can add a candidate");
-        candidates[numCandidates].candidate_name = name;
-        candidates[numCandidates].candidate_description = description;
-        candidates[numCandidates].imgHash = imgHash;
-        candidates[numCandidates].email = email;
-        candidates[numCandidates].voteCount = 0;
+        candidates[numCandidates] = Candidate(name,description,imgHash,0,numCandidates);
         numCandidates++;
     }
 
     //function to vote and check for double voting
 
-    function vote(uint8 candidateID, string memory e) public {
+    function vote(uint8 candidateID) public {
         //if false the vote will be registered
-        require(!voters[e].voted, "Error:You cannot double vote");
-        voters[e] = Voter(candidateID, true);
+        require(!voters[msg.sender].voted, "Error:You cannot double vote");
+        voters[msg.sender] = Voter(candidateID, true);
         numVoters++;
         candidates[candidateID].voteCount++;
     }
@@ -79,29 +73,11 @@ contract Election {
         return chairman;
     }
 
-    function getCandidate(
-        uint8 candidateID
-    )
-        public
-        view
-        returns (
-            string memory,
-            string memory,
-            string memory,
-            uint8,
-            string memory
-        )
-    {
-        return (
-            candidates[candidateID].candidate_name,
-            candidates[candidateID].candidate_description,
-            candidates[candidateID].imgHash,
-            candidates[candidateID].voteCount,
-            candidates[candidateID].email
-        );
+    function getCandidate(uint8 candidateID) public view returns (Candidate memory){
+        return candidates[candidateID];
     }
 
-    function winnerCandidate() public view returns (uint8) {
+    function winnerCandidate() public view returns (Candidate memory) {
         uint8 largestVotes = candidates[0].voteCount;
         uint8 candidateID;
         for (uint8 i = 1; i < numCandidates; i++) {
@@ -110,6 +86,6 @@ contract Election {
                 candidateID = i;
             }
         }
-        return (candidateID);
+        return candidates[candidateID];
     }
 }
