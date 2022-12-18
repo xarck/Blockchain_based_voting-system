@@ -2,7 +2,6 @@ import React from "react";
 import { Input, Label } from "reactstrap";
 
 export default function ShowCandidateDetails(winner) {
-    // console.log(winner[0]);
     return (
         <div id="candidate-details">
             <img src="" alt="" />

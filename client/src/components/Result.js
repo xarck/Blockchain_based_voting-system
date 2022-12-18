@@ -50,7 +50,7 @@ export default function Count() {
             provider
         );
         let data = await contract.winnerCandidate();
-        data = await contract.getCandidate(data);
+        console.log(data);
         setWinner(data);
     }
 

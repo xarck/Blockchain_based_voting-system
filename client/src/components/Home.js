@@ -7,7 +7,6 @@ import { ElectionAddress } from "../config.js";
 import { Input, Button, Label } from "reactstrap";
 
 export default function Home() {
-    const [voterName, setVoterName] = useState("");
     const [candidateVotingID, setCandidateVotingID] = useState(0);
 
     async function makeavote() {
@@ -19,16 +18,11 @@ export default function Home() {
             signer
         );
 
-        let data = await contract.vote(candidateVotingID, voterName);
+        let data = await contract.vote(candidateVotingID);
         console.log(data);
     }
     return (
         <div id="home">
-            <Label>Voter Name</Label>
-            <Input
-                name="voter"
-                onChange={(e) => setVoterName(e.target.value)}
-            />
             <Label>Candidate ID</Label>
             <Input
                 type="Number"

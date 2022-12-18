@@ -9,7 +9,6 @@ import { Button, Input, Label } from "reactstrap";
 
 export default function AddCandidate() {
     const [name, setName] = useState();
-    const [email, setEmail] = useState();
     const [image, setImage] = useState();
     const [description, setDescription] = useState();
     const { account } = useData();
@@ -27,12 +26,7 @@ export default function AddCandidate() {
             signer
         );
         try {
-            var data = await contract.addCandidate(
-                name,
-                description,
-                image,
-                email
-            );
+            var data = await contract.addCandidate(name, description, image);
             console.log(data);
         } catch (err) {
             console.log(err);
@@ -64,14 +58,6 @@ export default function AddCandidate() {
                     name="img"
                     placeholder="Image"
                     onChange={(e) => setImage(e.target.value)}
-                />
-            </div>
-            <div>
-                <Label>Email</Label>
-                <Input
-                    name="email"
-                    placeholder="Email"
-                    onChange={(e) => setEmail(e.target.value)}
                 />
             </div>
             <br />
