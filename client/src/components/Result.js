@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from "react";
 
-import { Button, Label, Input } from "reactstrap";
-
+import { Label } from "reactstrap";
+import CandidateCard from "../common/CandidateCard";
 import { ethers } from "ethers";
 import Election from "../Election.json";
 import { ElectionAddress } from "../config.js";
-
-import ShowCandidateDetails from "./ShowCandidateDetails";
 
 export default function Count() {
     const [numberofVoters, setNumberofVoters] = useState(0);
     const [numberofCandidates, setNumberofCandidate] = useState(0);
     const [winner, setWinner] = useState(null);
-    const [candidateDetails, setCandidateDetails] = useState();
-    const [candidateID, setCandidateID] = useState(0);
 
     useEffect(() => {
         getDetails();
+        checkWinner();
     }, []);
 
     async function getDetails() {
@@ -50,22 +47,7 @@ export default function Count() {
             provider
         );
         let data = await contract.winnerCandidate();
-        console.log(data);
         setWinner(data);
-    }
-
-    async function fetchCandidateDetails() {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-
-        const contract = new ethers.Contract(
-            ElectionAddress,
-            Election.abi,
-            provider
-        );
-
-        let data = await contract.getCandidate(candidateID);
-        console.log(data);
-        setCandidateDetails(data);
     }
 
     return (
@@ -74,22 +56,11 @@ export default function Count() {
             <br />
             <Label>Total Candidate : {numberofCandidates}</Label>
             <br />
-            <Label>Candidate ID</Label>
-            <Input
-                placeholder="Enter Candidate ID"
-                onChange={(e) => setCandidateID(e.target.value)}
-            />
-            <br />
-            <Button onClick={fetchCandidateDetails}> Fetch Details</Button>
-            {candidateDetails ? (
-                ShowCandidateDetails(candidateDetails)
+            {winner ? (
+                <CandidateCard type="Winner" candidate={winner} dim="70px" />
             ) : (
-                <div></div>
+                ""
             )}
-            <br />
-            <Button onClick={checkWinner}>Show Winner</Button>
-            <br />
-            {winner ? ShowCandidateDetails(winner) : ""}
         </div>
     );
 }

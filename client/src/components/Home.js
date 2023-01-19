@@ -1,35 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { ethers } from "ethers";
 import Election from "../Election.json";
 import { ElectionAddress } from "../config.js";
 
-import { Input, Button, Label } from "reactstrap";
+import CandidateCard from "../common/CandidateCard";
 
 export default function Home() {
-    const [candidateVotingID, setCandidateVotingID] = useState(0);
+    const [candidates, setCandidates] = useState();
+    useEffect(() => {
+        fetchCandidates();
+    }, []);
 
-    async function makeavote() {
+    async function fetchCandidates() {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
         const contract = new ethers.Contract(
             ElectionAddress,
             Election.abi,
-            signer
+            provider
         );
-
-        let data = await contract.vote(candidateVotingID);
-        console.log(data);
+        let data = await contract.getCandidates();
+        setCandidates(data);
     }
     return (
         <div id="home">
-            <Label>Candidate ID</Label>
-            <Input
-                type="Number"
-                name="candId"
-                onChange={(e) => setCandidateVotingID(e.target.value)}
-            />
-            <Button onClick={makeavote}>Vote</Button>
+            {!candidates ? (
+                <p>No Candidates are available</p>
+            ) : (
+                candidates.map((candidate) => {
+                    return (
+                        <CandidateCard
+                            key={candidate.candidateID}
+                            type="Candidate"
+                            candidate={candidate}
+                            dim="70px"
+                        />
+                    );
+                })
+            )}
         </div>
     );
 }
