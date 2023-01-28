@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ethers } from "ethers";
 
 import Election from "../Election.json";
 import { ElectionAddress } from "../config";
-import { useData } from "../context/data";
 
 import { Button, Input, Label } from "reactstrap";
 
@@ -11,11 +10,6 @@ export default function AddCandidate() {
     const [name, setName] = useState();
     const [image, setImage] = useState();
     const [description, setDescription] = useState();
-    const { account } = useData();
-
-    useEffect(() => {
-        console.log(account);
-    }, []);
 
     async function addACandidate() {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
